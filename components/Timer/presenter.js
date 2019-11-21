@@ -15,6 +15,19 @@ class Timer extends Component {
     }
   }
 
+  formatDisplayTime = (timerDuration, elapsedTime) => {
+    let hour = Math.floor((timerDuration - elapsedTime) / 60);
+    let minute = 60 - elapsedTime % 60;
+    
+    if (minute === 60) {
+      minute = '00';
+    } else if(minute < 10) {
+      minute = '0' + minute;
+    }
+
+    return `${hour} : ${minute}`;
+  }
+
   render() {
     console.log('props', this.props);
     const { isPlaying, elapsedTime, timerDuration, startTimer, restartTimer } = this.props;
@@ -22,7 +35,7 @@ class Timer extends Component {
       <View style={styles.container}>
         <StatusBar barStyle={"light-content"} />
         <View style={styles.upper}>
-          <Text style={styles.time}>{timerDuration - elapsedTime}</Text>
+          <Text style={styles.time}>{this.formatDisplayTime(timerDuration, elapsedTime)}</Text>
         </View>
         <View style={styles.lower}>
           { !isPlaying && (
@@ -40,7 +53,7 @@ class Timer extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'gray',
+    backgroundColor: '#518cf0',
   },
   upper: {
     flex: 2,
